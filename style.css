@@ -552,6 +552,25 @@ h3,
     }
 }
 
+/* Email Button Wrapper */
+.email-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.email-btn-wrapper.center {
+    align-items: center;
+}
+
+.email-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
 /* Modal Styles */
 .modal {
     display: none;
