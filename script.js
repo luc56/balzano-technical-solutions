@@ -53,7 +53,9 @@ const translations = {
         skills_3: "Regolazione valvole",
         skills_4: "Controlli e misurazioni",
         skills_5: "Ottimizzazione processi produttivi",
-        skills_6: "Sicurezza ambienti industriali"
+        skills_6: "Sicurezza ambienti industriali",
+        skills_7: "Regolazioni pneumatiche ed elettroniche",
+        skills_8: "Rapporti di combustione aria/combustibile e logica di sicurezza forni/caldaie di grosse dimensioni"
     },
     de: {
         nav_focus: "Fokus",
@@ -109,7 +111,9 @@ const translations = {
         skills_3: "Ventilregulierung",
         skills_4: "Kontrollen und Messungen",
         skills_5: "Optimierung von Produktionsprozessen",
-        skills_6: "Sicherheit in Industrieumgebungen"
+        skills_6: "Sicherheit in Industrieumgebungen",
+        skills_7: "Pneumatische und elektronische Regelungen",
+        skills_8: "Luft-Brennstoff-Gemischverhältnisse und Sicherheitslogik für große Öfen und Kessel"
     },
     en: {
         nav_focus: "Focus",
@@ -165,7 +169,9 @@ const translations = {
         skills_3: "Valve regulation",
         skills_4: "Controls and measurements",
         skills_5: "Production process optimization",
-        skills_6: "Industrial environment safety"
+        skills_6: "Industrial environment safety",
+        skills_7: "Pneumatic and electronic regulations",
+        skills_8: "Air/fuel combustion ratios and safety logic for large furnaces and boilers"
     }
 };
 
