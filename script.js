@@ -40,7 +40,20 @@ const translations = {
         footer_privacy: "Privacy Policy",
         privacy_title: "Privacy Policy",
         privacy_text: "Questa è una bozza informativa. Balzano Technical Solutions rispetta la tua privacy e utilizza i tuoi dati solo per scopi professionali relativi alla consulenza tecnica.",
-        privacy_btn: "Ho capito"
+        privacy_btn: "Ho capito",
+        about_title: "Chi sono",
+        about_1: "Esperienza elettromeccanica",
+        about_2: "Lavoro su impianti",
+        about_3: "Manutenzione",
+        about_4: "Controlli valvole",
+        about_5: "Sicurezza industriale",
+        skills_title: "Competenze tecniche",
+        skills_1: "Elettromeccanica industriale",
+        skills_2: "Analisi guasti impianti",
+        skills_3: "Regolazione valvole",
+        skills_4: "Controlli e misurazioni",
+        skills_5: "Ottimizzazione processi produttivi",
+        skills_6: "Sicurezza ambienti industriali"
     },
     de: {
         nav_focus: "Fokus",
@@ -83,7 +96,20 @@ const translations = {
         footer_privacy: "Datenschutz",
         privacy_title: "Datenschutz-Bestimmungen",
         privacy_text: "Dies ist ein informativer Entwurf. Balzano Technical Solutions respektiert Ihre Privatsphäre und verwendet Ihre Daten nur für berufliche Zwecke im Zusammenhang mit der technischen Beratung.",
-        privacy_btn: "Verstanden"
+        privacy_btn: "Verstanden",
+        about_title: "Über mich",
+        about_1: "Elektromechanische Erfahrung",
+        about_2: "Arbeit an Anlagen",
+        about_3: "Wartung",
+        about_4: "Ventilsteuerung",
+        about_5: "Industrielle Sicherheit",
+        skills_title: "Technische Kompetenzen",
+        skills_1: "Industrielle Elektromechanik",
+        skills_2: "Fehleranalyse an Anlagen",
+        skills_3: "Ventilregulierung",
+        skills_4: "Kontrollen und Messungen",
+        skills_5: "Optimierung von Produktionsprozessen",
+        skills_6: "Sicherheit in Industrieumgebungen"
     },
     en: {
         nav_focus: "Focus",
@@ -126,7 +152,20 @@ const translations = {
         footer_privacy: "Privacy Policy",
         privacy_title: "Privacy Policy",
         privacy_text: "This is a draft notice. Balzano Technical Solutions respects your privacy and uses your data only for professional purposes related to technical consultancy.",
-        privacy_btn: "I understand"
+        privacy_btn: "I understand",
+        about_title: "About Me",
+        about_1: "Electromechanical experience",
+        about_2: "Work on plants",
+        about_3: "Maintenance",
+        about_4: "Valve controls",
+        about_5: "Industrial safety",
+        skills_title: "Technical Skills",
+        skills_1: "Industrial electromechanics",
+        skills_2: "Plant fault analysis",
+        skills_3: "Valve regulation",
+        skills_4: "Controls and measurements",
+        skills_5: "Production process optimization",
+        skills_6: "Industrial environment safety"
     }
 };
 
