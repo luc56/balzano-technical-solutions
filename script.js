@@ -41,6 +41,7 @@ const translations = {
         privacy_title: "Privacy Policy",
         privacy_text: "Questa è una bozza informativa. Balzano Technical Solutions rispetta la tua privacy e utilizza i tuoi dati solo per scopi professionali relativi alla consulenza tecnica.",
         privacy_btn: "Ho capito",
+        footer_visits: "Visite:",
         about_title: "Chi sono",
         about_1: "Esperienza elettromeccanica",
         about_2: "Lavoro su impianti",
@@ -99,6 +100,7 @@ const translations = {
         privacy_title: "Datenschutz-Bestimmungen",
         privacy_text: "Dies ist ein informativer Entwurf. Balzano Technical Solutions respektiert Ihre Privatsphäre und verwendet Ihre Daten nur für berufliche Zwecke im Zusammenhang mit der technischen Beratung.",
         privacy_btn: "Verstanden",
+        footer_visits: "Besuche:",
         about_title: "Über mich",
         about_1: "Elektromechanische Erfahrung",
         about_2: "Arbeit an Anlagen",
@@ -157,6 +159,7 @@ const translations = {
         privacy_title: "Privacy Policy",
         privacy_text: "This is a draft notice. Balzano Technical Solutions respects your privacy and uses your data only for professional purposes related to technical consultancy.",
         privacy_btn: "I understand",
+        footer_visits: "Visits:",
         about_title: "About Me",
         about_1: "Electromechanical experience",
         about_2: "Work on plants",
@@ -315,4 +318,36 @@ window.onclick = function (event) {
     if (event.target == modal) {
         closePrivacyModal();
     }
+}
+
+// Visit Counter logic
+async function initVisitCounter() {
+    const counterValueEl = document.getElementById('counter-value');
+    if (!counterValueEl) return;
+
+    try {
+        // Namespace and key for the counter
+        const namespace = "balzano-technical-solutions";
+        const key = "visits";
+        const url = `https://api.counterapi.dev/v1/${namespace}/${key}/up`;
+
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            counterValueEl.textContent = data.count.toLocaleString();
+        } else {
+            console.warn("Failed to fetch visit count");
+            counterValueEl.textContent = "-";
+        }
+    } catch (error) {
+        console.error("Error updating visit counter:", error);
+        counterValueEl.textContent = "-";
+    }
+}
+
+// Initialize counter on load
+document.addEventListener('DOMContentLoaded', initVisitCounter);
+// Fallback if DOMContentLoaded already fired
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initVisitCounter();
 }

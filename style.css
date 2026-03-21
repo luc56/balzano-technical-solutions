@@ -581,6 +581,22 @@ h3,
     font-size: 0.9rem;
 }
 
+.visit-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.visit-counter #counter-value {
+    color: var(--accent-color);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
 /* Animations */
 [data-reveal] {
     opacity: 0;
