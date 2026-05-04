@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instruments Tools | App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+    <script src="languages.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <div class="logo">ITC</div>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="inst_nav_home">Torna alla Home</a>
+            </div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="it">IT</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="de">DE</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="inst-hero">
+        <div class="container">
+            <h1 data-i18n="inst_hero_title">Instruments Tools</h1>
+            <p class="inst-hero-subtitle" data-i18n="inst_hero_subtitle">Tutto in uno: strumenti per ingegneria, calcoli tecnici, conversioni e toolkit professionale.</p>
+            <a id="playStoreLink" href="https://play.google.com/store/apps/details?id=lucianoblz.instruments&hl=it" target="_blank" class="play-badge">
+                <svg viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+                <span data-i18n="inst_btn_play">Scarica su Google Play</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="inst-desc-section">
+        <div class="container">
+            <p data-i18n="inst_desc">Instruments è il toolkit definitivo progettato per ingegneri, tecnici e hobbisti...</p>
+        </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <!-- Carousel -->
+            <div class="carousel-container">
+                <div class="carousel-slide" id="carouselSlide">
+                    <!-- Images inserted via JS -->
+                </div>
+                <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+                <button class="carousel-btn next" id="nextBtn">&#10095;</button>
+                <div class="carousel-dots" id="carouselDots">
+                    <!-- Dots inserted via JS -->
+                </div>
+            </div>
+
+            <div class="grid" style="margin-top: 4rem;">
+                <div class="card feat-card reveal">
+                    <div class="feat-icon">⚡</div>
+                    <h3 data-i18n="inst_feat1_title">Calcoli Elettrici Professionali</h3>
+                    <p data-i18n="inst_feat1_desc">Calcolo delle linee elettriche, dimensionamento cavi e caduta di tensione.</p>
+                </div>
+                <div class="card feat-card reveal">
+                    <div class="feat-icon">🎛️</div>
+                    <h3 data-i18n="inst_feat2_title">Strumentazione e Segnali</h3>
+                    <p data-i18n="inst_feat2_desc">Convertitore di segnali 4-20mA con visualizzazione della scala.</p>
+                </div>
+                <div class="card feat-card reveal">
+                    <div class="feat-icon">🚰</div>
+                    <h3 data-i18n="inst_feat3_title">Calcolatore Piping</h3>
+                    <p data-i18n="inst_feat3_desc">Dimensionamento tubazioni e calcoli idraulici per fluidi.</p>
+                </div>
+                <div class="card feat-card reveal">
+                    <div class="feat-icon">🌈</div>
+                    <h3 data-i18n="inst_feat4_title">Codice Colori Resistenze</h3>
+                    <p data-i18n="inst_feat4_desc">Identifica il valore delle resistenze a 4 o 5 bande in un istante.</p>
+                </div>
+                <div class="card feat-card reveal">
+                    <div class="feat-icon">🔄</div>
+                    <h3 data-i18n="inst_feat5_title">Convertitori di Unità</h3>
+                    <p data-i18n="inst_feat5_desc">Potenza, Pressione, Temperatura, Valuta in tempo reale.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box reveal">
+                <h3 data-i18n="inst_why_title" style="color: var(--accent); margin-bottom: 1.5rem; font-size: 2rem;">Perché scegliere Instruments?</h3>
+                <ul style="list-style: none; text-align: left; max-width: 600px; margin: 0 auto; font-size: 1.1rem; line-height: 2;">
+                    <li>✅ <span data-i18n="inst_why1">Semplice e intuitiva</span></li>
+                    <li>✅ <span data-i18n="inst_why2">Multilingua</span></li>
+                    <li>✅ <span data-i18n="inst_why3">Precisione Tecnica</span></li>
+                </ul>
+                <p data-i18n="inst_download" style="margin-top: 2rem; font-weight: 600;">Scarica Instruments oggi stesso!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 4rem 0; text-align: center; border-top: 1px solid var(--border);">
+        <p class="text-muted">&copy; 2024 Industrial Technical Consultancy. <span data-i18n="footer_rights">Tutti i diritti riservati.</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const appImages = {
+            it: [
+                'ita/home_instruments_tools_1.jpg',
+                'ita/home_instruments_tools_2.jpg',
+                'ita/calcolo_cavi.jpeg',
+                'ita/calcolo_tubazioni_portata.jpeg',
+                'ita/convertitore_analogico.jpeg',
+                'ita/strumentazione.jpeg',
+                'ita/taratura_strumentazione.jpeg'
+            ],
+            en: [
+                'english/instruments_hub_1.jpg',
+                'english/instruments_hub_2.jpg',
+                'english/electrical_linee.jpg',
+                'english/electrical_lines_calc_2.jpg',
+                'english/pipe_sizing_calculator.jpg',
+                'english/resistor_color_code.jpg',
+                'english/tool_dictionary.jpg'
+            ],
+            de: [
+                'deutsch/instruments_hub_1.jpg',
+                'deutsch/Instruments Hub_2.jpg',
+                'deutsch/instruments_hub_3.jpg',
+                'deutsch/stromleitungenberechnungen.jpg',
+                'deutsch/rohr_berechnung_hilfe.jpg',
+                'deutsch/technische_werkzeuge.jpg',
+                'deutsch/werkzeuge_wörterbuck.jpg',
+                'deutsch/widerstandfarbecode.jpg'
+            ]
+        };
+
+        const slideContainer = document.getElementById('carouselSlide');
+        const dotsContainer = document.getElementById('carouselDots');
+        let currentIdx = 0;
+        let autoSlideInterval;
+
+        function loadImagesForLang(lang) {
+            const images = appImages[lang] || appImages['en'];
+            slideContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            currentIdx = 0;
+            slideContainer.style.transform = `translateX(0)`;
+
+            images.forEach((src, idx) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Screenshot ${idx + 1}`;
+                slideContainer.appendChild(img);
+
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (idx === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(idx));
+                dotsContainer.appendChild(dot);
+            });
+            startAutoSlide();
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentIdx);
+            });
+        }
+
+        function goToSlide(idx) {
+            const total = slideContainer.children.length;
+            currentIdx = (idx + total) % total;
+            slideContainer.style.transform = `translateX(-${currentIdx * 100}%)`;
+            updateDots();
+            resetAutoSlide();
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentIdx - 1));
+        document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentIdx + 1));
+
+        function startAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(() => {
+                goToSlide(currentIdx + 1);
+            }, 3000);
+        }
+
+        function resetAutoSlide() {
+            startAutoSlide();
+        }
+
+        // Listen for language changes dispatched from script.js
+        document.addEventListener('languageChanged', (e) => {
+            const lang = e.detail;
+            loadImagesForLang(lang);
+            
+            // Aggiorna il link del Google Play Store per aprirsi nella lingua corretta
+            const playLink = document.getElementById('playStoreLink');
+            if (playLink) {
+                playLink.href = `https://play.google.com/store/apps/details?id=lucianoblz.instruments&hl=${lang}`;
+            }
+        });
+
+        // Initialize carousel on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentLang = localStorage.getItem('preferred-lang') || 'it';
+            loadImagesForLang(currentLang);
+        });
+    </script>
+</body>
+
+</html>

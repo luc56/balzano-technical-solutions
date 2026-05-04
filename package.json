@@ -1,0 +1,12 @@
+{
+  "name": "industrial-technical-consultancy",
+  "version": "1.0.0",
+  "description": "Backend for Instruments Tools AI Assistant using OpenAI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "openai": "^4.47.1"
+  }
+}
