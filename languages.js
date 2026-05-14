@@ -47,7 +47,8 @@ const translations = {
         inst_why3: 'Precisione Tecnica: Algoritmi testati per uso professionale.',
         inst_download: 'Scarica Instruments oggi stesso e trasforma il tuo smartphone in un laboratorio di calcolo portatile!',
         inst_btn_play: 'Scarica su Google Play',
-        inst_nav_home: 'Torna alla Home'
+        inst_nav_home: 'Torna alla Home',
+        footer_visits: 'Visite:'
     },
     en: {
         hero_title: '"Let\'s see where we are losing time and money"',
@@ -97,7 +98,8 @@ const translations = {
         inst_why3: 'Technical Precision: Algorithms tested for professional use.',
         inst_download: 'Download Instruments today and transform your smartphone into a portable calculation lab!',
         inst_btn_play: 'Download on Google Play',
-        inst_nav_home: 'Back to Home'
+        inst_nav_home: 'Back to Home',
+        footer_visits: 'Visits:'
     },
     de: {
         hero_title: '"Sehen wir uns an, wo wir Zeit und Geld verlieren"',
@@ -147,6 +149,7 @@ const translations = {
         inst_why3: 'Technische Präzision: Algorithmen getestet für den professionellen Einsatz.',
         inst_download: 'Laden Sie Instruments noch heute herunter und verwandeln Sie Ihr Smartphone in ein tragbares Berechnungslabor!',
         inst_btn_play: 'Download bei Google Play',
-        inst_nav_home: 'Zurück zur Startseite'
+        inst_nav_home: 'Zurück zur Startseite',
+        footer_visits: 'Besuche:'
     }
 };

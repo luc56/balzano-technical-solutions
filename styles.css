@@ -432,3 +432,20 @@ body::before {
     text-align: center;
     padding: 2rem;
 }
+
+/* Visit Counter Styles */
+.visit-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.visit-counter #counter-value {
+    color: var(--primary);
+    font-weight: 700;
+}

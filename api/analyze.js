@@ -24,10 +24,19 @@ module.exports = async (req, res) => {
   }
 
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      return res.status(500).json({ 
+        success: false, 
+        error: "Configurazione Server Errata (Chiave API mancante).",
+        message: "Configurazione Server Errata (Chiave API mancante).",
+        details: "OPENAI_API_KEY is not defined in environment variables."
+      });
+    }
+
     const { image, mode, description, language = 'it' } = req.body;
 
-    if (!image) {
-      return res.status(400).json({ error: 'Image is required (base64)' });
+    if (!image && !description) {
+      return res.status(400).json({ error: 'Image or description is required.' });
     }
 
     // Set instructions based on requested language
@@ -57,23 +66,22 @@ module.exports = async (req, res) => {
 
     const fullPrompt = `${langContext} ${taskInstructions}`;
 
-    // Prepare image for OpenAI (needs data URI format if not already present)
-    const formattedImage = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
+    const userContent = [{ type: "text", text: fullPrompt }];
+    
+    if (image) {
+      const formattedImage = image.startsWith('data:') ? image : `data:image/jpeg;base64,${image}`;
+      userContent.push({
+        type: "image_url",
+        image_url: { "url": formattedImage }
+      });
+    }
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
           role: "user",
-          content: [
-            { type: "text", text: fullPrompt },
-            {
-              type: "image_url",
-              image_url: {
-                "url": formattedImage,
-              },
-            },
-          ],
+          content: userContent,
         },
       ],
       max_tokens: 1000,
@@ -84,15 +92,47 @@ module.exports = async (req, res) => {
     return res.status(200).json({ 
       success: true, 
       analysis: text,
+      usage: response.usage,
       mode: mode 
     });
 
   } catch (error) {
     console.error("OpenAI API Error:", error);
-    return res.status(500).json({ 
+    
+    let userMessage = "Errore durante l'analisi dell'immagine.";
+    let statusCode = 500;
+
+    if (error instanceof OpenAI.APIError) {
+      statusCode = error.status || 500;
+      switch (error.code) {
+        case 'insufficient_quota':
+          userMessage = "Credito OpenAI esaurito o piano non attivo. Per favore, acquista dei token su OpenAI per procedere.";
+          break;
+        case 'rate_limit_exceeded':
+          userMessage = "Troppe richieste in breve tempo. Riprova tra poco.";
+          break;
+        case 'model_not_found':
+          userMessage = "Modello AI non disponibile al momento.";
+          break;
+        case 'invalid_api_key':
+          userMessage = "Chiave API OpenAI non valida. Controlla la configurazione su Vercel.";
+          break;
+        default:
+          userMessage = `Errore AI (${error.code || 'unknown'}): ${error.message}`;
+      }
+    } else if (error.message && error.message.includes('timeout')) {
+      statusCode = 504;
+      userMessage = "La richiesta ha impiegato troppo tempo. Riprova con un'immagine più piccola.";
+    } else {
+      userMessage = `Errore imprevisto: ${error.message}`;
+    }
+
+    return res.status(statusCode).json({ 
       success: false, 
-      error: "Errore durante l'analisi dell'immagine.",
-      details: error.message 
+      error: userMessage,
+      message: userMessage, // Aggiunto per compatibilità app
+      details: error.message,
+      code: error.code || 'internal_error'
     });
   }
 };

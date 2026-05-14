@@ -57,3 +57,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
     });
 });
+
+// Visit Counter logic
+async function initVisitCounter() {
+    const counterValueEl = document.getElementById('counter-value');
+    if (!counterValueEl) return;
+
+    try {
+        const namespace = "balzano-technical-solutions";
+        const key = "visits";
+        const url = `https://api.counterapi.dev/v1/${namespace}/${key}/up`;
+
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            counterValueEl.textContent = data.count.toLocaleString();
+        } else {
+            console.warn("Failed to fetch visit count");
+            counterValueEl.textContent = "-";
+        }
+    } catch (error) {
+        console.error("Error updating visit counter:", error);
+        counterValueEl.textContent = "-";
+    }
+}
+
+// Initialize counter on load
+document.addEventListener('DOMContentLoaded', initVisitCounter);
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initVisitCounter();
+}
