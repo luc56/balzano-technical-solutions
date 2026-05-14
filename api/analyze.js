@@ -4,6 +4,39 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const errorMessages = {
+  it: {
+    insufficient_quota: "Credito OpenAI esaurito o piano non attivo. Per favore, acquista dei token su OpenAI per procedere.",
+    rate_limit_exceeded: "Troppe richieste in breve tempo. Riprova tra poco.",
+    model_not_found: "Modello AI non disponibile al momento.",
+    invalid_api_key: "Chiave API OpenAI non valida. Controlla la configurazione su Vercel.",
+    default: "Errore durante l'analisi dell'immagine.",
+    timeout: "La richiesta ha impiegato troppo tempo. Riprova con un'immagine più piccola.",
+    unknown: "Errore imprevisto",
+    config_missing: "Configurazione Server Errata (Chiave API mancante)."
+  },
+  en: {
+    insufficient_quota: "OpenAI credit exhausted or plan not active. Please purchase tokens on OpenAI to proceed.",
+    rate_limit_exceeded: "Too many requests in a short time. Please try again later.",
+    model_not_found: "AI model currently unavailable.",
+    invalid_api_key: "Invalid OpenAI API key. Check the configuration on Vercel.",
+    default: "Error during image analysis.",
+    timeout: "The request took too long. Try again with a smaller image.",
+    unknown: "Unexpected error",
+    config_missing: "Server Configuration Error (Missing API Key)."
+  },
+  de: {
+    insufficient_quota: "OpenAI-Guthaben erschöpft oder Plan nicht aktiv. Bitte kaufen Sie Token auf OpenAI, um fortzufahren.",
+    rate_limit_exceeded: "Zu viele Anfragen in kurzer Zeit. Bitte versuchen Sie es später noch einmal.",
+    model_not_found: "KI-Modell derzeit nicht verfügbar.",
+    invalid_api_key: "Ungültiger OpenAI-API-Schlüssel. Überprüfen Sie die Konfiguration auf Vercel.",
+    default: "Fehler bei der Bildanalyse.",
+    timeout: "Die Anfrage hat zu lange gedauert. Versuchen Sie es mit einem kleineren Bild erneut.",
+    unknown: "Unerwarteter Fehler",
+    config_missing: "Serverkonfigurationsfehler (Fehlender API-Schlüssel)."
+  }
+};
+
 module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -25,15 +58,18 @@ module.exports = async (req, res) => {
 
   try {
     if (!process.env.OPENAI_API_KEY) {
+      const lang = req.body.language || 'it';
+      const msg = (errorMessages[lang] || errorMessages['en']).config_missing;
       return res.status(500).json({ 
         success: false, 
-        error: "Configurazione Server Errata (Chiave API mancante).",
-        message: "Configurazione Server Errata (Chiave API mancante).",
+        error: msg,
+        message: msg,
         details: "OPENAI_API_KEY is not defined in environment variables."
       });
     }
 
     const { image, mode, description, language = 'it' } = req.body;
+    const lang = language; // Helper for error messages
 
     if (!image && !description) {
       return res.status(400).json({ error: 'Image or description is required.' });
@@ -46,7 +82,7 @@ module.exports = async (req, res) => {
       'de': "Antworten Sie auf DEUTSCH. Verwenden Sie einen technischen und professionellen Ton."
     };
 
-    const langContext = languageMap[language] || languageMap['en'];
+    const langContext = languageMap[lang] || languageMap['en'];
 
     // Define Prompts based on mode
     let taskInstructions = "";
@@ -99,32 +135,34 @@ module.exports = async (req, res) => {
   } catch (error) {
     console.error("OpenAI API Error:", error);
     
-    let userMessage = "Errore durante l'analisi dell'immagine.";
+    const lang = req.body.language || 'it';
+    const dict = errorMessages[lang] || errorMessages['en'];
+    let userMessage = dict.default;
     let statusCode = 500;
 
     if (error instanceof OpenAI.APIError) {
       statusCode = error.status || 500;
       switch (error.code) {
         case 'insufficient_quota':
-          userMessage = "Credito OpenAI esaurito o piano non attivo. Per favore, acquista dei token su OpenAI per procedere.";
+          userMessage = dict.insufficient_quota;
           break;
         case 'rate_limit_exceeded':
-          userMessage = "Troppe richieste in breve tempo. Riprova tra poco.";
+          userMessage = dict.rate_limit_exceeded;
           break;
         case 'model_not_found':
-          userMessage = "Modello AI non disponibile al momento.";
+          userMessage = dict.model_not_found;
           break;
         case 'invalid_api_key':
-          userMessage = "Chiave API OpenAI non valida. Controlla la configurazione su Vercel.";
+          userMessage = dict.invalid_api_key;
           break;
         default:
           userMessage = `Errore AI (${error.code || 'unknown'}): ${error.message}`;
       }
     } else if (error.message && error.message.includes('timeout')) {
       statusCode = 504;
-      userMessage = "La richiesta ha impiegato troppo tempo. Riprova con un'immagine più piccola.";
+      userMessage = dict.timeout;
     } else {
-      userMessage = `Errore imprevisto: ${error.message}`;
+      userMessage = `${dict.unknown}: ${error.message}`;
     }
 
     return res.status(statusCode).json({ 
@@ -135,4 +173,5 @@ module.exports = async (req, res) => {
       code: error.code || 'internal_error'
     });
   }
+
 };
