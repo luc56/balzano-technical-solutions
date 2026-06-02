@@ -15,14 +15,77 @@ Questa API permette all'app Android "Instruments Tools" di analizzare immagini d
 | `mode` | String | Sì | Tipo di analisi: `info`, `faults`, `suggestions`. |
 | `description` | String | No | Dettagli aggiuntivi o sintomi del guasto. |
 | `language` | String | No | Lingua della risposta: `it`, `en`, `de`. Default: `it`. |
+| `deviceId` | String | No | ID univoco del dispositivo per il tracciamento delle 2 scansioni gratuite (fortemente raccomandato). |
+| `code` | String | No | Codice di abbonamento/attivazione (richiesto dopo le prime 2 scansioni gratuite). |
 
-### Esempio di Richiesta
+### Esempio di Richiesta (Scansione Gratuita)
 ```json
 {
   "image": "iVBORw0KGgoAAAANS...",
   "mode": "faults",
   "description": "Si sente odore di bruciato vicino al teleruttore.",
-  "language": "it"
+  "language": "it",
+  "deviceId": "device_123456789"
+}
+```
+
+### Esempio di Richiesta (Con Codice di Attivazione)
+```json
+{
+  "image": "iVBORw0KGgoAAAANS...",
+  "mode": "info",
+  "language": "it",
+  "deviceId": "device_123456789",
+  "code": "PROMO20"
+}
+```
+
+## Struttura della Risposta (JSON)
+
+### Risposta di Successo (`200 OK`)
+```json
+{
+  "success": true,
+  "analysis": "Testo generato dall'IA...",
+  "usage": {
+    "prompt_tokens": 1200,
+    "completion_tokens": 150,
+    "total_tokens": 1350
+  },
+  "mode": "info",
+  "isFree": false,
+  "remainingCredits": 19
+}
+```
+
+### Risposta di Errore - Quota Gratuita Esaurita (`403 Forbidden`)
+Restituita quando un dispositivo ha superato le 2 scansioni gratuite e non ha inviato un codice.
+```json
+{
+  "success": false,
+  "error": "Quota gratuita esaurita. Inserisci un codice di attivazione per continuare.",
+  "code": "quota_exceeded",
+  "needCode": true
+}
+```
+
+### Risposta di Errore - Codice Non Valido (`403 Forbidden`)
+Restituita quando il codice di attivazione inserito non esiste nel database.
+```json
+{
+  "success": false,
+  "error": "Codice di attivazione non valido o errato.",
+  "code": "invalid_code"
+}
+```
+
+### Risposta di Errore - Codice Esaurito (`403 Forbidden`)
+Restituita quando il codice di attivazione ha esaurito i crediti disponibili.
+```json
+{
+  "success": false,
+  "error": "Questo codice di attivazione ha esaurito i crediti disponibili.",
+  "code": "code_depleted"
 }
 ```
 

@@ -1,4 +1,5 @@
 const OpenAI = require("openai");
+const { kv } = require("@vercel/kv");
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -13,7 +14,10 @@ const errorMessages = {
     default: "Errore durante l'analisi dell'immagine.",
     timeout: "La richiesta ha impiegato troppo tempo. Riprova con un'immagine più piccola.",
     unknown: "Errore imprevisto",
-    config_missing: "Configurazione Server Errata (Chiave API mancante)."
+    config_missing: "Configurazione Server Errata (Chiave API mancante).",
+    quota_exceeded: "Quota gratuita esaurita. Inserisci un codice di attivazione per continuare.",
+    invalid_code: "Codice di attivazione non valido o errato.",
+    code_depleted: "Questo codice di attivazione ha esaurito i crediti disponibili."
   },
   en: {
     insufficient_quota: "OpenAI credit exhausted or plan not active. Please purchase tokens on OpenAI to proceed.",
@@ -23,7 +27,10 @@ const errorMessages = {
     default: "Error during image analysis.",
     timeout: "The request took too long. Try again with a smaller image.",
     unknown: "Unexpected error",
-    config_missing: "Server Configuration Error (Missing API Key)."
+    config_missing: "Server Configuration Error (Missing API Key).",
+    quota_exceeded: "Free quota exhausted. Enter an activation code to continue.",
+    invalid_code: "Invalid or incorrect activation code.",
+    code_depleted: "This activation code has run out of available credits."
   },
   de: {
     insufficient_quota: "OpenAI-Guthaben erschöpft oder Plan nicht aktiv. Bitte kaufen Sie Token auf OpenAI, um fortzufahren.",
@@ -33,7 +40,10 @@ const errorMessages = {
     default: "Fehler bei der Bildanalyse.",
     timeout: "Die Anfrage hat zu lange gedauert. Versuchen Sie es mit einem kleineren Bild erneut.",
     unknown: "Unerwarteter Fehler",
-    config_missing: "Serverkonfigurationsfehler (Fehlender API-Schlüssel)."
+    config_missing: "Serverkonfigurationsfehler (Fehlender API-Schlüssel).",
+    quota_exceeded: "Freies Kontingent erschöpft. Geben Sie einen Aktivierungscode ein, um fortzufahren.",
+    invalid_code: "Ungültiger oder falscher Aktivierungscode.",
+    code_depleted: "Dieser Aktivierungscode hat keine verfügbaren Credits mehr."
   }
 };
 
@@ -68,11 +78,72 @@ module.exports = async (req, res) => {
       });
     }
 
-    const { image, mode, description, language = 'it' } = req.body;
+    const { image, mode, description, language = 'it', deviceId, code } = req.body;
     const lang = language; // Helper for error messages
+
+    // Check if KV is configured
+    const isKvConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
+    if (!isKvConfigured) {
+      return res.status(500).json({
+        success: false,
+        error: lang === 'it' ? 'Database KV non configurato su Vercel.' : 'KV Database not configured on Vercel.',
+        code: 'kv_not_configured'
+      });
+    }
 
     if (!image && !description) {
       return res.status(400).json({ error: 'Image or description is required.' });
+    }
+
+    // 1. Quota & Code Check using Vercel KV
+    const clientDevice = deviceId || req.headers['x-forwarded-for'] || 'unknown_device';
+    let isFreeCall = false;
+    let currentFreeCalls = 0;
+    let remainingCredits = 0;
+    let codeCredits = 0;
+
+    const freeCallsKey = `device:${clientDevice}:free_calls`;
+    const rawFreeCalls = await kv.get(freeCallsKey);
+    currentFreeCalls = rawFreeCalls ? parseInt(rawFreeCalls) : 0;
+
+    if (currentFreeCalls < 2) {
+      isFreeCall = true;
+      remainingCredits = 2 - (currentFreeCalls + 1); // how many free calls are left after this one
+    } else {
+      // Free quota exceeded, check for activation code
+      if (!code) {
+        const msg = (errorMessages[lang] || errorMessages['en']).quota_exceeded;
+        return res.status(403).json({
+          success: false,
+          error: msg,
+          code: "quota_exceeded",
+          needCode: true
+        });
+      }
+
+      const codeKey = `code:${code}`;
+      const rawCodeCredits = await kv.get(codeKey);
+
+      if (rawCodeCredits === null || rawCodeCredits === undefined) {
+        const msg = (errorMessages[lang] || errorMessages['en']).invalid_code;
+        return res.status(403).json({
+          success: false,
+          error: msg,
+          code: "invalid_code"
+        });
+      }
+
+      codeCredits = parseInt(rawCodeCredits);
+      if (codeCredits <= 0) {
+        const msg = (errorMessages[lang] || errorMessages['en']).code_depleted;
+        return res.status(403).json({
+          success: false,
+          error: msg,
+          code: "code_depleted"
+        });
+      }
+
+      remainingCredits = codeCredits - 1;
     }
 
     // Set instructions based on requested language
@@ -125,11 +196,20 @@ module.exports = async (req, res) => {
 
     const text = response.choices[0].message.content;
 
+    // Update KV after successful OpenAI response
+    if (isFreeCall) {
+      await kv.set(freeCallsKey, currentFreeCalls + 1);
+    } else {
+      await kv.set(`code:${code}`, remainingCredits);
+    }
+
     return res.status(200).json({ 
       success: true, 
       analysis: text,
       usage: response.usage,
-      mode: mode 
+      mode: mode,
+      isFree: isFreeCall,
+      remainingCredits: remainingCredits
     });
 
   } catch (error) {
