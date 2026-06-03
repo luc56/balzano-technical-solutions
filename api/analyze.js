@@ -159,7 +159,7 @@ module.exports = async (req, res) => {
     let taskInstructions = "";
     switch (mode) {
       case 'info':
-        taskInstructions = "Identify the electrical component or part of the electrical cabinet. Provide technical details, brand, and main functions.";
+        taskInstructions = `Identify the electrical component or part of the electrical cabinet described as: "${description || 'none'}". Provide technical details, brand, and main functions.`;
         break;
       case 'faults':
         taskInstructions = `Analyze the image for visible faults (burn marks, loose wires, oxidation). Consider user symptoms: "${description || 'none'}". List potential issues.`;
