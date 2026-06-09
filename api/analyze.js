@@ -102,48 +102,56 @@ module.exports = async (req, res) => {
     let remainingCredits = 0;
     let codeCredits = 0;
 
-    const freeCallsKey = `device:${clientDevice}:free_calls`;
-    const rawFreeCalls = await kv.get(freeCallsKey);
-    currentFreeCalls = rawFreeCalls ? parseInt(rawFreeCalls) : 0;
+    // Check for special bypass tokens (premium subscription or developer mode)
+    const isBypassActive = code === "premium_bypass_token" || code === "luciano_dev_free";
 
-    if (currentFreeCalls < 2) {
-      isFreeCall = true;
-      remainingCredits = 2 - (currentFreeCalls + 1); // how many free calls are left after this one
+    if (isBypassActive) {
+      isFreeCall = false;
+      remainingCredits = 999999;
     } else {
-      // Free quota exceeded, check for activation code
-      if (!code) {
-        const msg = (errorMessages[lang] || errorMessages['en']).quota_exceeded;
-        return res.status(403).json({
-          success: false,
-          error: msg,
-          code: "quota_exceeded",
-          needCode: true
-        });
+      const freeCallsKey = `device:${clientDevice}:free_calls`;
+      const rawFreeCalls = await kv.get(freeCallsKey);
+      currentFreeCalls = rawFreeCalls ? parseInt(rawFreeCalls) : 0;
+
+      if (currentFreeCalls < 2) {
+        isFreeCall = true;
+        remainingCredits = 2 - (currentFreeCalls + 1); // how many free calls are left after this one
+      } else {
+        // Free quota exceeded, check for activation code
+        if (!code) {
+          const msg = (errorMessages[lang] || errorMessages['en']).quota_exceeded;
+          return res.status(403).json({
+            success: false,
+            error: msg,
+            code: "quota_exceeded",
+            needCode: true
+          });
+        }
+
+        const codeKey = `code:${code}`;
+        const rawCodeCredits = await kv.get(codeKey);
+
+        if (rawCodeCredits === null || rawCodeCredits === undefined) {
+          const msg = (errorMessages[lang] || errorMessages['en']).invalid_code;
+          return res.status(403).json({
+            success: false,
+            error: msg,
+            code: "invalid_code"
+          });
+        }
+
+        codeCredits = parseInt(rawCodeCredits);
+        if (codeCredits <= 0) {
+          const msg = (errorMessages[lang] || errorMessages['en']).code_depleted;
+          return res.status(403).json({
+            success: false,
+            error: msg,
+            code: "code_depleted"
+          });
+        }
+
+        remainingCredits = codeCredits - 1;
       }
-
-      const codeKey = `code:${code}`;
-      const rawCodeCredits = await kv.get(codeKey);
-
-      if (rawCodeCredits === null || rawCodeCredits === undefined) {
-        const msg = (errorMessages[lang] || errorMessages['en']).invalid_code;
-        return res.status(403).json({
-          success: false,
-          error: msg,
-          code: "invalid_code"
-        });
-      }
-
-      codeCredits = parseInt(rawCodeCredits);
-      if (codeCredits <= 0) {
-        const msg = (errorMessages[lang] || errorMessages['en']).code_depleted;
-        return res.status(403).json({
-          success: false,
-          error: msg,
-          code: "code_depleted"
-        });
-      }
-
-      remainingCredits = codeCredits - 1;
     }
 
     // Set instructions based on requested language
@@ -197,7 +205,9 @@ module.exports = async (req, res) => {
     const text = response.choices[0].message.content;
 
     // Update KV after successful OpenAI response
-    if (isFreeCall) {
+    if (isBypassActive) {
+      // Do nothing, bypass active
+    } else if (isFreeCall) {
       await kv.set(freeCallsKey, currentFreeCalls + 1);
     } else {
       await kv.set(`code:${code}`, remainingCredits);
