@@ -56,7 +56,16 @@ const translations = {
         inst_download: 'Scarica Instruments oggi stesso e trasforma il tuo smartphone in un laboratorio di calcolo portatile!',
         inst_btn_play: 'Scarica su Google Play',
         inst_nav_home: 'Torna alla Home',
-        footer_visits: 'Visite:'
+        footer_visits: 'Visite:',
+        inst_ai_title: 'Assistente Tecnico AI',
+        inst_ai_subtitle: 'Il tuo consulente personale per la diagnostica e la risoluzione dei problemi in tempo reale.',
+        inst_ai_desc: 'Instruments integra un avanzato assistente basato su intelligenza artificiale, progettato per affiancare sul campo tecnici ed ingegneri. Con due modalità operative dedicate, offre un supporto immediato e mirato per ogni esigenza:',
+        inst_ai_opt1_title: '1. Informazioni Tecniche',
+        inst_ai_opt1_desc: 'Ottieni risposte rapide a quesiti tecnici, formule, normative o dati di targa dei componenti in modo immediato.',
+        inst_ai_opt2_title: '2. Risoluzione Guasti e Problemi',
+        inst_ai_opt2_desc: 'Una guida passo-passo per la diagnostica dei guasti, l\'analisi delle anomalie e la risoluzione di problemi complessi sui sistemi industriali.',
+        inst_ai_tab_main: 'Schermata Iniziale',
+        inst_ai_tab_tech: 'Assistente Tecnico'
     },
     en: {
         hero_title: '"Let\'s see where we are losing time and money"',
@@ -115,7 +124,16 @@ const translations = {
         inst_download: 'Download Instruments today and transform your smartphone into a portable calculation lab!',
         inst_btn_play: 'Download on Google Play',
         inst_nav_home: 'Back to Home',
-        footer_visits: 'Visits:'
+        footer_visits: 'Visits:',
+        inst_ai_title: 'AI Technical Assistant',
+        inst_ai_subtitle: 'Your personal advisor for diagnostics and real-time troubleshooting.',
+        inst_ai_desc: 'Instruments integrates an advanced AI-powered assistant, designed to support technicians and engineers in the field. With two dedicated operational modes, it offers immediate and targeted help for any need:',
+        inst_ai_opt1_title: '1. Technical Information',
+        inst_ai_opt1_desc: 'Get quick answers to technical questions, formulas, standards, or component nameplate data instantly.',
+        inst_ai_opt2_title: '2. Troubleshooting & Fault Resolution',
+        inst_ai_opt2_desc: 'A step-by-step guide for troubleshooting, anomaly analysis, and resolving complex issues on industrial systems.',
+        inst_ai_tab_main: 'Initial Screen',
+        inst_ai_tab_tech: 'Technical Assistant'
     },
     de: {
         hero_title: '"Sehen wir uns an, wo wir Zeit und Geld verlieren"',
@@ -174,6 +192,15 @@ const translations = {
         inst_download: 'Laden Sie Instruments noch heute herunter und verwandeln Sie Ihr Smartphone in ein tragbares Berechnungslabor!',
         inst_btn_play: 'Download bei Google Play',
         inst_nav_home: 'Zurück zur Startseite',
-        footer_visits: 'Besuche:'
+        footer_visits: 'Besuche:',
+        inst_ai_title: 'Technischer KI-Assistent',
+        inst_ai_subtitle: 'Ihr persönlicher Berater für Diagnostik und Fehlerbehebung in Echtzeit.',
+        inst_ai_desc: 'Instruments integriert einen fortschrittlichen KI-gestützten Assistenten, der Techniker und Ingenieure vor Ort unterstützt. Mit zwei speziellen Betriebsmodi bietet er sofortige und zielgerichtete Hilfe für jeden Bedarf:',
+        inst_ai_opt1_title: '1. Technische Informationen',
+        inst_ai_opt1_desc: 'Erhalten Sie sofort schnelle Antworten auf technische Fragen, Formeln, Normen oder Typenschilddaten von Komponenten.',
+        inst_ai_opt2_title: '2. Fehlersuche & Problembehebung',
+        inst_ai_opt2_desc: 'Eine Schritt-für-Schritt-Anleitung zur Fehlersuche, Analyse von Anomalien und Behebung komplexer Probleme an Industrieanlagen.',
+        inst_ai_tab_main: 'Startbildschirm',
+        inst_ai_tab_tech: 'Technischer Assistent'
     }
 };

@@ -58,7 +58,46 @@
                 </div>
             </div>
 
-            <div class="grid" style="margin-top: 4rem;">
+            <!-- AI Assistant Interactive Showcase -->
+            <div class="ai-assistant-showcase reveal">
+                <div class="ai-showcase-grid">
+                    <div class="ai-showcase-media">
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <img id="aiMockupImage" src="ita/AI_Main.jpg" alt="AI Technical Assistant Screenshot">
+                        </div>
+                        <div class="ai-tabs">
+                            <button class="ai-tab-btn active" id="aiTabMain" data-i18n="inst_ai_tab_main">Schermata Iniziale</button>
+                            <button class="ai-tab-btn" id="aiTabTech" data-i18n="inst_ai_tab_tech">Assistente Tecnico</button>
+                        </div>
+                    </div>
+                    <div class="ai-showcase-content">
+                        <div class="ai-badge-new">NEW</div>
+                        <h2 data-i18n="inst_ai_title" class="ai-title">Assistente Tecnico AI</h2>
+                        <p data-i18n="inst_ai_subtitle" class="ai-subtitle">Il tuo consulente personale per la diagnostica e la risoluzione dei problemi in tempo reale.</p>
+                        <p data-i18n="inst_ai_desc" class="ai-description">Instruments integra un avanzato assistente basato su intelligenza artificiale, progettato per affiancare sul campo tecnici ed ingegneri. Con due modalità operative dedicate, offre un supporto immediato e mirato per ogni esigenza:</p>
+                        
+                        <div class="ai-features">
+                            <div class="ai-feature-item active" id="aiFeature1">
+                                <div class="ai-feature-icon">💡</div>
+                                <div class="ai-feature-text">
+                                    <h4 data-i18n="inst_ai_opt1_title">1. Informazioni Tecniche</h4>
+                                    <p data-i18n="inst_ai_opt1_desc">Ottieni risposte rapide a quesiti tecnici, formule, normative o dati di targa dei componenti in modo immediato.</p>
+                                </div>
+                            </div>
+                            <div class="ai-feature-item" id="aiFeature2">
+                                <div class="ai-feature-icon">🛠️</div>
+                                <div class="ai-feature-text">
+                                    <h4 data-i18n="inst_ai_opt2_title">2. Risoluzione Guasti e Problemi</h4>
+                                    <p data-i18n="inst_ai_opt2_desc">Una guida passo-passo per la diagnostica dei guasti, l'analisi delle anomalie e la risoluzione di problemi complessi sui sistemi industriali.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid" style="margin-top: 5rem;">
                 <div class="card feat-card reveal">
                     <div class="feat-icon">⚡</div>
                     <h3 data-i18n="inst_feat1_title">Calcoli Elettrici Professionali</h3>
@@ -112,6 +151,8 @@
             it: [
                 'ita/home_instruments_tools_1.jpg',
                 'ita/home_instruments_tools_2.jpg',
+                'ita/AI_Main.jpg',
+                'ita/AI_assistente_tecnico.jpg',
                 'ita/calcolo_cavi.jpeg',
                 'ita/calcolo_tubazioni_portata.jpeg',
                 'ita/convertitore_analogico.jpeg',
@@ -121,6 +162,8 @@
             en: [
                 'english/instruments_hub_1.jpg',
                 'english/instruments_hub_2.jpg',
+                'english/AI_Home.jpg',
+                'english/ai_technical_assistent.jpg',
                 'english/electrical_linee.jpg',
                 'english/electrical_lines_calc_2.jpg',
                 'english/pipe_sizing_calculator.jpg',
@@ -131,6 +174,8 @@
                 'deutsch/instruments_hub_1.jpg',
                 'deutsch/Instruments Hub_2.jpg',
                 'deutsch/instruments_hub_3.jpg',
+                'deutsch/KI_Home.jpg',
+                'deutsch/KI_technischer_assistent.jpg',
                 'deutsch/stromleitungenberechnungen.jpg',
                 'deutsch/rohr_berechnung_hilfe.jpg',
                 'deutsch/technische_werkzeuge.jpg',
@@ -195,10 +240,79 @@
             startAutoSlide();
         }
 
+        const aiImages = {
+            it: {
+                main: 'ita/AI_Main.jpg',
+                tech: 'ita/AI_assistente_tecnico.jpg'
+            },
+            en: {
+                main: 'english/AI_Home.jpg',
+                tech: 'english/ai_technical_assistent.jpg'
+            },
+            de: {
+                main: 'deutsch/KI_Home.jpg',
+                tech: 'deutsch/KI_technischer_assistent.jpg'
+            }
+        };
+
+        let currentAiLang = 'it';
+        let currentAiTab = 'main';
+
+        function updateAiShowcase() {
+            const mockupImg = document.getElementById('aiMockupImage');
+            if (!mockupImg) return;
+            
+            const langData = aiImages[currentAiLang] || aiImages['en'];
+            const newSrc = currentAiTab === 'main' ? langData.main : langData.tech;
+            
+            mockupImg.style.opacity = '0';
+            setTimeout(() => {
+                mockupImg.src = newSrc;
+                mockupImg.style.opacity = '1';
+            }, 150);
+            
+            const tabMain = document.getElementById('aiTabMain');
+            const tabTech = document.getElementById('aiTabTech');
+            if (tabMain && tabTech) {
+                tabMain.classList.toggle('active', currentAiTab === 'main');
+                tabTech.classList.toggle('active', currentAiTab === 'tech');
+            }
+            
+            const feat1 = document.getElementById('aiFeature1');
+            const feat2 = document.getElementById('aiFeature2');
+            if (feat1 && feat2) {
+                feat1.classList.toggle('active', currentAiTab === 'main');
+                feat2.classList.toggle('active', currentAiTab === 'tech');
+            }
+        }
+
+        // Tab buttons listeners
+        document.getElementById('aiTabMain')?.addEventListener('click', () => {
+            currentAiTab = 'main';
+            updateAiShowcase();
+        });
+        document.getElementById('aiTabTech')?.addEventListener('click', () => {
+            currentAiTab = 'tech';
+            updateAiShowcase();
+        });
+        
+        // Feature items click listeners
+        document.getElementById('aiFeature1')?.addEventListener('click', () => {
+            currentAiTab = 'main';
+            updateAiShowcase();
+        });
+        document.getElementById('aiFeature2')?.addEventListener('click', () => {
+            currentAiTab = 'tech';
+            updateAiShowcase();
+        });
+
         // Listen for language changes dispatched from script.js
         document.addEventListener('languageChanged', (e) => {
             const lang = e.detail;
             loadImagesForLang(lang);
+            
+            currentAiLang = lang;
+            updateAiShowcase();
             
             // Aggiorna il link del Google Play Store per aprirsi nella lingua corretta
             const playLink = document.getElementById('playStoreLink');
@@ -211,6 +325,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const currentLang = localStorage.getItem('preferred-lang') || 'it';
             loadImagesForLang(currentLang);
+            currentAiLang = currentLang;
+            updateAiShowcase();
         });
     </script>
 </body>
