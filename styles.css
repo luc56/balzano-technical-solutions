@@ -345,8 +345,8 @@ body::before {
 /* Carousel */
 .carousel-container {
     position: relative;
-    max-width: 260px;
-    height: 520px;
+    max-width: 290px;
+    height: 580px;
     margin: 4rem auto;
     overflow: hidden;
     border-radius: 30px;
@@ -478,8 +478,8 @@ body::before {
 }
 
 .phone-mockup {
-    width: 260px;
-    height: 520px;
+    width: 290px;
+    height: 580px;
     border: 8px solid #101726;
     border-radius: 30px;
     position: relative;
@@ -499,11 +499,11 @@ body::before {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 16px;
+    width: 110px;
+    height: 18px;
     background: #101726;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
     z-index: 5;
 }
 
