@@ -45,6 +45,16 @@ module.exports = async (req, res) => {
     return res.status(400).json({ success: false, error: 'missing_parameters', message: 'Codice o ID dispositivo mancante.' });
   }
 
+  // Handle special bypass developer codes
+  if (type === 'code' && (code === 'premium_bypass_token' || code === 'luciano_dev_free')) {
+    return res.status(200).json({
+      success: true,
+      type: 'code',
+      key: code,
+      credits: 999999
+    });
+  }
+
   try {
     const isKvConfigured = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
     if (!isKvConfigured) {
