@@ -72,8 +72,8 @@ const translations = {
         inst_ai_check_btn: 'Verifica',
         inst_ai_check_loading: 'Verifica in corso...',
         inst_ai_check_not_found: 'Codice non trovato o scaduto.',
-        inst_ai_check_result_code: 'Il codice inserito ha {credits} scansioni rimanenti.',
-        inst_ai_check_result_device: 'Il tuo dispositivo ha {credits} scansioni gratuite rimanenti.',
+        inst_ai_check_result_code: 'Il codice inserito ha {credits} token rimanenti.',
+        inst_ai_check_result_device: 'Il tuo dispositivo ha {credits} token gratuiti rimanenti.',
         inst_ai_check_error: 'Errore durante la verifica.'
     },
     en: {
@@ -149,8 +149,8 @@ const translations = {
         inst_ai_check_btn: 'Verify',
         inst_ai_check_loading: 'Checking...',
         inst_ai_check_not_found: 'Code not found or expired.',
-        inst_ai_check_result_code: 'The code entered has {credits} remaining scans.',
-        inst_ai_check_result_device: 'Your device has {credits} remaining free scans.',
+        inst_ai_check_result_code: 'The code entered has {credits} remaining tokens.',
+        inst_ai_check_result_device: 'Your device has {credits} remaining free tokens.',
         inst_ai_check_error: 'Error during verification.'
     },
     de: {
@@ -226,8 +226,8 @@ const translations = {
         inst_ai_check_btn: 'Prüfen',
         inst_ai_check_loading: 'Überprüfung...',
         inst_ai_check_not_found: 'Code nicht gefunden oder abgelaufen.',
-        inst_ai_check_result_code: 'Der Code hat noch {credits} verbleibende Scans.',
-        inst_ai_check_result_device: 'Ihr Gerät hat noch {credits} verbleibende kostenlose Scans.',
+        inst_ai_check_result_code: 'Der Code hat noch {credits} verbleibende Tokens.',
+        inst_ai_check_result_device: 'Ihr Gerät hat noch {credits} verbleibende kostenlose Tokens.',
         inst_ai_check_error: 'Fehler bei der Überprüfung.'
     }
 };
