@@ -65,7 +65,8 @@ const translations = {
         inst_ai_opt2_title: '2. Risoluzione Guasti e Problemi',
         inst_ai_opt2_desc: 'Una guida passo-passo per la diagnostica dei guasti, l\'analisi delle anomalie e la risoluzione di problemi complessi sui sistemi industriali.',
         inst_ai_tab_main: 'Schermata Iniziale',
-        inst_ai_tab_tech: 'Assistente Tecnico'
+        inst_ai_tab_tech: 'Assistente Tecnico',
+        inst_ai_pricing_note: 'L\'app offre 2 richieste gratuite per provare il servizio, dopodiché è necessario sottoscrivere un abbonamento per continuare ad utilizzare l\'assistente AI.'
     },
     en: {
         hero_title: '"Let\'s see where we are losing time and money"',
@@ -133,7 +134,8 @@ const translations = {
         inst_ai_opt2_title: '2. Troubleshooting & Fault Resolution',
         inst_ai_opt2_desc: 'A step-by-step guide for troubleshooting, anomaly analysis, and resolving complex issues on industrial systems.',
         inst_ai_tab_main: 'Initial Screen',
-        inst_ai_tab_tech: 'Technical Assistant'
+        inst_ai_tab_tech: 'Technical Assistant',
+        inst_ai_pricing_note: 'The app offers 2 free requests to try the service, after which a subscription is required to continue using the AI assistant.'
     },
     de: {
         hero_title: '"Sehen wir uns an, wo wir Zeit und Geld verlieren"',
@@ -201,6 +203,7 @@ const translations = {
         inst_ai_opt2_title: '2. Fehlersuche & Problembehebung',
         inst_ai_opt2_desc: 'Eine Schritt-für-Schritt-Anleitung zur Fehlersuche, Analyse von Anomalien und Behebung komplexer Probleme an Industrieanlagen.',
         inst_ai_tab_main: 'Startbildschirm',
-        inst_ai_tab_tech: 'Technischer Assistent'
+        inst_ai_tab_tech: 'Technischer Assistent',
+        inst_ai_pricing_note: 'Die App bietet 2 kostenlose Anfragen zum Testen des Dienstes. Danach ist ein Abonnement erforderlich, um den KI-Assistenten weiterhin nutzen zu können.'
     }
 };
