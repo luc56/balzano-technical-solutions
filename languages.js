@@ -66,7 +66,15 @@ const translations = {
         inst_ai_opt2_desc: 'Una guida passo-passo per la diagnostica dei guasti, l\'analisi delle anomalie e la risoluzione di problemi complessi sui sistemi industriali.',
         inst_ai_tab_main: 'Schermata Iniziale',
         inst_ai_tab_tech: 'Assistente Tecnico',
-        inst_ai_pricing_note: 'L\'app offre 2 richieste gratuite per provare il servizio, dopodiché è necessario sottoscrivere un abbonamento per continuare ad utilizzare l\'assistente AI.'
+        inst_ai_pricing_note: 'L\'app offre 2 richieste gratuite per provare il servizio, dopodiché è necessario sottoscrivere un abbonamento per continuare ad utilizzare l\'assistente AI.',
+        inst_ai_check_title: 'Verifica i tuoi Crediti',
+        inst_ai_check_placeholder: 'Codice attivazione o ID dispositivo',
+        inst_ai_check_btn: 'Verifica',
+        inst_ai_check_loading: 'Verifica in corso...',
+        inst_ai_check_not_found: 'Codice non trovato o scaduto.',
+        inst_ai_check_result_code: 'Il codice inserito ha {credits} scansioni rimanenti.',
+        inst_ai_check_result_device: 'Il tuo dispositivo ha {credits} scansioni gratuite rimanenti.',
+        inst_ai_check_error: 'Errore durante la verifica.'
     },
     en: {
         hero_title: '"Let\'s see where we are losing time and money"',
@@ -135,7 +143,15 @@ const translations = {
         inst_ai_opt2_desc: 'A step-by-step guide for troubleshooting, anomaly analysis, and resolving complex issues on industrial systems.',
         inst_ai_tab_main: 'Initial Screen',
         inst_ai_tab_tech: 'Technical Assistant',
-        inst_ai_pricing_note: 'The app offers 2 free requests to try the service, after which a subscription is required to continue using the AI assistant.'
+        inst_ai_pricing_note: 'The app offers 2 free requests to try the service, after which a subscription is required to continue using the AI assistant.',
+        inst_ai_check_title: 'Verify your Credits',
+        inst_ai_check_placeholder: 'Activation code or device ID',
+        inst_ai_check_btn: 'Verify',
+        inst_ai_check_loading: 'Checking...',
+        inst_ai_check_not_found: 'Code not found or expired.',
+        inst_ai_check_result_code: 'The code entered has {credits} remaining scans.',
+        inst_ai_check_result_device: 'Your device has {credits} remaining free scans.',
+        inst_ai_check_error: 'Error during verification.'
     },
     de: {
         hero_title: '"Sehen wir uns an, wo wir Zeit und Geld verlieren"',
@@ -204,6 +220,14 @@ const translations = {
         inst_ai_opt2_desc: 'Eine Schritt-für-Schritt-Anleitung zur Fehlersuche, Analyse von Anomalien und Behebung komplexer Probleme an Industrieanlagen.',
         inst_ai_tab_main: 'Startbildschirm',
         inst_ai_tab_tech: 'Technischer Assistent',
-        inst_ai_pricing_note: 'Die App bietet 2 kostenlose Anfragen zum Testen des Dienstes. Danach ist ein Abonnement erforderlich, um den KI-Assistenten weiterhin nutzen zu können.'
+        inst_ai_pricing_note: 'Die App bietet 2 kostenlose Anfragen zum Testen des Dienstes. Danach ist ein Abonnement erforderlich, um den KI-Assistenten weiterhin nutzen zu können.',
+        inst_ai_check_title: 'Guthaben überprüfen',
+        inst_ai_check_placeholder: 'Aktivierungscode oder Geräte-ID',
+        inst_ai_check_btn: 'Prüfen',
+        inst_ai_check_loading: 'Überprüfung...',
+        inst_ai_check_not_found: 'Code nicht gefunden oder abgelaufen.',
+        inst_ai_check_result_code: 'Der Code hat noch {credits} verbleibende Scans.',
+        inst_ai_check_result_device: 'Ihr Gerät hat noch {credits} verbleibende kostenlose Scans.',
+        inst_ai_check_error: 'Fehler bei der Überprüfung.'
     }
 };

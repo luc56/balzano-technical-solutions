@@ -82,6 +82,16 @@
                             <span data-i18n="inst_ai_pricing_note" class="ai-pricing-text">L'app offre 2 richieste gratuite per provare il servizio, dopodiché è necessario sottoscrivere un abbonamento per continuare ad utilizzare l'assistente AI.</span>
                         </div>
                         
+                        <!-- Credits Checker Widget -->
+                        <div class="ai-credits-checker">
+                            <h4 data-i18n="inst_ai_check_title" class="ai-checker-title">Verifica i tuoi Crediti</h4>
+                            <div class="ai-checker-form">
+                                <input type="text" id="aiCreditsInput" placeholder="Codice attivazione o ID dispositivo" autocomplete="off">
+                                <button id="aiCheckBtn" class="ai-check-btn" data-i18n="inst_ai_check_btn">Verifica</button>
+                            </div>
+                            <div id="aiCheckerResult" class="ai-checker-result"></div>
+                        </div>
+                        
                         <div class="ai-features">
                             <div class="ai-feature-item active" id="aiFeature1">
                                 <div class="ai-feature-icon">💡</div>
@@ -311,6 +321,51 @@
             updateAiShowcase();
         });
 
+        // Credits checker implementation
+        async function checkRemainingCredits() {
+            const inputEl = document.getElementById('aiCreditsInput');
+            const resultEl = document.getElementById('aiCheckerResult');
+            const btnEl = document.getElementById('aiCheckBtn');
+            if (!inputEl || !resultEl || !btnEl) return;
+            
+            const value = inputEl.value.trim();
+            if (!value) return;
+            
+            btnEl.disabled = true;
+            resultEl.className = 'ai-checker-result';
+            resultEl.innerText = translations[currentAiLang]?.inst_ai_check_loading || 'Checking...';
+            
+            try {
+                let apiRes = await fetch(`/api/credits?code=${encodeURIComponent(value)}`);
+                let data = await apiRes.json();
+                
+                if (!data.success && data.error === 'code_not_found') {
+                    apiRes = await fetch(`/api/credits?deviceId=${encodeURIComponent(value)}`);
+                    data = await apiRes.json();
+                }
+                
+                if (data.success) {
+                    resultEl.className = 'ai-checker-result success';
+                    let template = '';
+                    if (data.type === 'code') {
+                        template = translations[currentAiLang]?.inst_ai_check_result_code || 'Code has {credits} scans left.';
+                    } else {
+                        template = translations[currentAiLang]?.inst_ai_check_result_device || 'Device has {credits} scans left.';
+                    }
+                    resultEl.innerText = template.replace('{credits}', data.credits);
+                } else {
+                    resultEl.className = 'ai-checker-result error';
+                    resultEl.innerText = translations[currentAiLang]?.inst_ai_check_not_found || 'Code or device not found.';
+                }
+            } catch (error) {
+                console.error("Error checking credits:", error);
+                resultEl.className = 'ai-checker-result error';
+                resultEl.innerText = translations[currentAiLang]?.inst_ai_check_error || 'Error checking credits.';
+            } finally {
+                btnEl.disabled = false;
+            }
+        }
+
         // Listen for language changes dispatched from script.js
         document.addEventListener('languageChanged', (e) => {
             const lang = e.detail;
@@ -318,6 +373,12 @@
             
             currentAiLang = lang;
             updateAiShowcase();
+            
+            // Update placeholder
+            const creditsInput = document.getElementById('aiCreditsInput');
+            if (creditsInput && translations[lang] && translations[lang]['inst_ai_check_placeholder']) {
+                creditsInput.placeholder = translations[lang]['inst_ai_check_placeholder'];
+            }
             
             // Aggiorna il link del Google Play Store per aprirsi nella lingua corretta
             const playLink = document.getElementById('playStoreLink');
@@ -332,6 +393,20 @@
             loadImagesForLang(currentLang);
             currentAiLang = currentLang;
             updateAiShowcase();
+
+            // Set up checker listeners
+            document.getElementById('aiCheckBtn')?.addEventListener('click', checkRemainingCredits);
+            document.getElementById('aiCreditsInput')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkRemainingCredits();
+                }
+            });
+
+            // Initial placeholder setting
+            const creditsInput = document.getElementById('aiCreditsInput');
+            if (creditsInput && translations[currentLang] && translations[currentLang]['inst_ai_check_placeholder']) {
+                creditsInput.placeholder = translations[currentLang]['inst_ai_check_placeholder'];
+            }
         });
     </script>
 </body>
